@@ -34,4 +34,6 @@ I used the 2nd method because it is faster. The implementation of the sliding wi
 
 ## Minimizing false positives and examples
 There are 3 methods that worked with me to minimize false positives. The first is using YCrCb color space features instead of HSV, this enhanced my pipeline alot. The 2nd method is constructing a heatmap using the findings of the windows of different scales and then thresholding this heatmap, this is based on the consideration that a false positive may be found once or twice only in a single frame and hence can be threhsolded out. The 3rd method is simply ruling out bounding boxes(detections after thresholding heatmap) that are too small. Here are some examples that shows the output of the pipeline in different images.
-
+![ScreenShot] (output_images/example1.jpg)
+![ScreenShot] (output_images/example2.jpg)
+![ScreenShot] (output_images/example3.jpg)
