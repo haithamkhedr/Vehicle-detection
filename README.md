@@ -13,3 +13,8 @@ Train an SVM linear classifier on the extracted features after feature normaliza
 #### 3-Sliding window
 Implement a sliding window that passes through the image, extract features from the window and use the classifier to classify if there is a car inside the window or not.
 
+
+## Histogram of Oriented Gradients (HOG)
+The code for Hog features extraction is found in `features.py` in the function `get_hog_features()` line #59.
+I used `skimage.hog()` to calulcate the HOG features for and image after reading it.
+I tried extracting the Hog features from different color spaces like `HSV` and `YCrCb` and found that using YCrCb color space achieved the best classification accuracy on the test set.The following images shows an example of the extracted Hog features.
