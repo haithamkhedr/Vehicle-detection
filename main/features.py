@@ -38,6 +38,8 @@ def transform_color(img,space = 'BGR'):
         transformed = cv2.cvtColor(img,cv2.COLOR_BGR2YUV)
     elif space is 'GRAY':
         transformed = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    elif space is 'YCrCb':
+        transformed = cv2.cvtColor(img,cv2.COLOR_BGR2YCrCb)
     return transformed
 
 ## Returns color histogram
