@@ -16,6 +16,8 @@ Implement a sliding window that passes through the image, extract features from 
 
 ## Histogram of Oriented Gradients (HOG)
 The code for Hog features extraction is found in `features.py` in the function `get_hog_features()` line #59.
-I used `skimage.hog()` to calulcate the HOG features for and image after reading it.
-I tried extracting the Hog features from different color spaces like `HSV` and `YCrCb` and found that using YCrCb color space achieved the best classification accuracy on the test set.The following images shows an example of the extracted Hog features.
+I used `skimage.hog()` to calulcate the HOG features for the image after reading it.
+I tried extracting the Hog features from different color spaces like `HSV` and `YCrCb` and found that using YCrCb color space minimized the false positives detection.The following images shows an example of the extracted Hog features.
 ![ScreenShot] (./output_images/Hog.jpg)
+
+Regarding the hog parameters, I manually tuned the 3 hog parameters which are `orientations`,`pix_per_cell`,`cell_per_block`. I tried orientations value from 9 to 12 , pix_per_cell from 7 to 10 but they did not affect performance so I chose to use 9 `orientations`, 8 `pix_per_cell` and 2 `cell_per_block` . The most important thing that affected the classification accuracy is the number of channels to extract hog features from. I tried many combinations but found that using all channels increased classification accuracy by 2 %.
