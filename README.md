@@ -21,3 +21,6 @@ I tried extracting the Hog features from different color spaces like `HSV` and `
 ![ScreenShot] (./output_images/Hog.jpg)
 
 Regarding the hog parameters, I manually tuned the 3 hog parameters which are `orientations`,`pix_per_cell`,`cell_per_block`. I tried orientations value from 9 to 12 , pix_per_cell from 7 to 10 but they did not affect performance so I chose to use 9 `orientations`, 8 `pix_per_cell` and 2 `cell_per_block` . The most important thing that affected the classification accuracy is the number of channels to extract hog features from. I tried many combinations but found that using all channels increased classification accuracy by 2 %.
+
+## Training a classifier
+This part is found in the notebook `main/Vehicle Detection.ipynb` from cell 3 to cell 9. Starting from cell 3, features are extracted from the dataset and saved to a pickle file, after that the data is randomly shuffled to prevent overfitting and to increase training speed, then the data is standardized(each feature has zero mean and unit standard deviation) and split into training and test sets, finally the training set is fed to the classifier to train on. I used a simple linear SVM as my classifier and it achieved an excellent accuracy (99%) on my test set.
