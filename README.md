@@ -5,7 +5,7 @@ The goal of this project is to detect and track vehicles in the scene as this is
 This is an explanation of the steps done in the project given a labeled dataset of images including cars and non cars. The dataset is a collection of Images from the Kitti and GTI datasets
 
 #### 1-Feature extraction
-Extraction of Hog features from the images together with resized spatial information(pixel values) and color histogram of the images in YCrCB color space
+Extraction of Hog features from the images together with resized spatial information(pixel values) and color histogram of the images in YCrCb color space
 
 #### 2-Classification
 Train an SVM linear classifier on the extracted features after feature normalization
@@ -17,7 +17,7 @@ Implement a sliding window that passes through the image, extract features from 
 ## Histogram of Oriented Gradients (HOG)
 The code for Hog features extraction is found in `features.py` in the function `get_hog_features()` line #59.
 I used `skimage.hog()` to calulcate the HOG features for the image after reading it.
-I tried extracting the Hog features from different color spaces like `HSV` and `YCrCb` and found that using YCrCb color space minimized the false positives detection.The following images shows an example of the extracted Hog features.
+I tried extracting the Hog features from different color spaces like `HSV` and `YCrCb` and found that using YCrCb color space minimized the false positives detection.The following images shows an example of the extracted Hog features using YCrCb color space.
 ![ScreenShot] (./output_images/Hog.jpg)
 
 Regarding the hog parameters, I manually tuned the 3 hog parameters which are `orientations`,`pix_per_cell`,`cell_per_block`. I tried orientations value from 9 to 12 , pix_per_cell from 7 to 10 but they did not affect performance so I chose to use 9 `orientations`, 8 `pix_per_cell` and 2 `cell_per_block` . The most important thing that affected the classification accuracy is the number of channels to extract hog features from. I tried many combinations but found that using all channels increased classification accuracy by 2 %.
@@ -37,3 +37,19 @@ There are 3 methods that worked with me to minimize false positives. The first i
 ![ScreenShot] (output_images/example1.jpg)
 ![ScreenShot] (output_images/example2.jpg)
 ![ScreenShot] (output_images/example3.jpg)
+
+## Video
+Here is a [link](https://youtu.be/R0ns2lJjJiY) to the video output
+
+#### False positives filtering
+I used the same technique of heatmaps as described before to minimize the false positives but integrated it along several(10) frames.
+This part is implemented in `main/Vehicle Detection.ipynb` in the cell before last. A buffer `cumulative_heat` holds the heatmaps of the latest 10 frames and for each new frame the heatmap is computed as a weighted average between the current heat map and the average heatmap of the 10 previous frames as shown below where `alpha` was set to 0.7 and `beta` was set to 0.3
+```
+heatmap  = beta * frame_heat + alpha * np.mean(cumulative_heat,axis = 0)
+heatmap = heatmap_threshold(heatmap , threshold = 2.5)
+```
+
+## Discussion
+Regarding the false positives, I think one way for minimizing them is to add more training data for the `not car` class.
+I also think that the vision approach alone won't be very robust against different conditions. To make it more robust we can add a kalman filter to track the movement of the cars.
+Overall this was an amazing project
