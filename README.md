@@ -18,4 +18,4 @@ Implement a sliding window that passes through the image, extract features from 
 The code for Hog features extraction is found in `features.py` in the function `get_hog_features()` line #59.
 I used `skimage.hog()` to calulcate the HOG features for and image after reading it.
 I tried extracting the Hog features from different color spaces like `HSV` and `YCrCb` and found that using YCrCb color space achieved the best classification accuracy on the test set.The following images shows an example of the extracted Hog features.
-![Screenshot] ('./output_images/Hog.jpg')
+![ScreenShot] (./output_images/Hog.jpg)
