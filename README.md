@@ -24,3 +24,9 @@ Regarding the hog parameters, I manually tuned the 3 hog parameters which are `o
 
 ## Training a classifier
 This part is found in the notebook `main/Vehicle Detection.ipynb` from cell 3 to cell 9. Starting from cell 3, features are extracted from the dataset and saved to a pickle file, after that the data is randomly shuffled to prevent overfitting and to increase training speed, then the data is standardized(each feature has zero mean and unit standard deviation) and split into training and test sets, finally the training set is fed to the classifier to train on. I used a simple linear SVM as my classifier and it achieved an excellent accuracy (99%) on my test set.
+
+## Sliding window implementation
+The sliding window is implemented in `main/Vehicle Detection.ipynb` cell #11 in the function `find_cars()`
+The idea here is to pass a sliding window across the image with different scales and search for cars in each window.
+There are 2 methods to implement the sliding window method, the first is to extract the hog -and other- features for each window then classify it. The other method is to compute the hog features for the whole image only once and then extract subarrays(features) for each window.
+I used the 2nd method because it is faster. The implementation of the sliding window needs a lot of tuning to decide how much windows overlap? and the scales of the sliding windows. First of all I tried overlap of 30-50-75 % and only the 75 % overlapping window gave a good result. I used 3 different sliding windows with sizes 108,96,87. The decision of such scales required too much manual tuning to achieve a good result. The last trick used to decrease the number of search windows is to search in the bottom half of the image as there won't be any cars in the sky.
