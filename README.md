@@ -18,7 +18,7 @@ Implement a sliding window that passes through the image, extract features from 
 The code for Hog features extraction is found in `features.py` in the function `get_hog_features()` line #59.
 I used `skimage.hog()` to calulcate the HOG features for the image after reading it.
 I tried extracting the Hog features from different color spaces like `HSV` and `YCrCb` and found that using YCrCb color space minimized the false positives detection.The following images shows an example of the extracted Hog features using YCrCb color space.
-![ScreenShot] (./output_images/Hog.jpg)
+![ScreenShot](./output_images/Hog.jpg)
 
 Regarding the hog parameters, I manually tuned the 3 hog parameters which are `orientations`,`pix_per_cell`,`cell_per_block`. I tried orientations value from 9 to 12 , pix_per_cell from 7 to 10 but they did not affect performance so I chose to use 9 `orientations`, 8 `pix_per_cell` and 2 `cell_per_block` . The most important thing that affected the classification accuracy is the number of channels to extract hog features from. I tried many combinations but found that using all channels increased classification accuracy by 2 %.
 
@@ -30,13 +30,13 @@ The sliding window is implemented in `main/Vehicle Detection.ipynb` cell #11 in 
 The idea here is to pass a sliding window across the image with different scales and search for cars in each window.
 There are 2 methods to implement the sliding window method, the first is to extract the hog -and other- features for each window then classify it. The other method is to compute the hog features for the whole image only once and then extract subarrays(features) for each window.
 I used the 2nd method because it is faster. The implementation of the sliding window needs a lot of tuning to decide how much windows overlap? and the scales of the sliding windows. First of all I tried overlap of 30-50-75 % and only the 75 % overlapping window gave a good result. I used 3 different sliding windows with sizes 108,96,87. The decision of such scales required too much manual tuning to achieve a good result. The last trick used to decrease the number of search windows is to search in the bottom half of the image as there won't be any cars in the sky. The image below show all the 108 X 108 windows being searched.
-![ScreenShot] (output_images/windows.jpg)
+![ScreenShot](output_images/windows.jpg)
 
 ## Minimizing false positives and examples
 There are 3 methods that worked with me to minimize false positives. The first is using YCrCb color space features instead of HSV, this enhanced my pipeline alot. The 2nd method is constructing a heatmap using the findings of the windows of different scales and then thresholding this heatmap, this is based on the consideration that a false positive may be found once or twice only in a single frame and hence can be threhsolded out. The 3rd method is simply ruling out bounding boxes(detections after thresholding heatmap) that are too small. Here are some examples that shows the output of the pipeline in different images.
-![ScreenShot] (output_images/example1.jpg)
-![ScreenShot] (output_images/example2.jpg)
-![ScreenShot] (output_images/example3.jpg)
+![ScreenShot](output_images/example1.jpg)
+![ScreenShot](output_images/example2.jpg)
+![ScreenShot](output_images/example3.jpg)
 
 ## Video
 Here is a [link](https://youtu.be/R0ns2lJjJiY) to the video output
